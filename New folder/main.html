@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OLSHCOG - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
+            color: #1e2f3a;
+        }
+        .header {
+            background: #8b1e3f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .nav {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid #8b1e3f;
+        }
+        .nav button {
+            background: #8b1e3f;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            margin: 0 10px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .logout-btn {
+            background: #dc3545 !important;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .hero {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .hero h2 { color: #8b1e3f; margin-bottom: 15px; }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .card h3 { color: #8b1e3f; margin-bottom: 10px; }
+        .badge {
+            background: #fef0e6;
+            color: #8b1e3f;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .info-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .info-block {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .info-block h3 { color: #8b1e3f; margin-bottom: 15px; }
+        footer {
+            background: #1e2f3a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .announcement {
+            background: #8b1e3f;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 15px; }
+            .hero { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🙏 Our Lady of the Sacred Heart College of Guimba</h1>
+        <p>Veritas · Caritas · Servitium | Est. 1947</p>
+    </div>
+    <div class="nav">
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('programs')">Programs</button>
+        <button onclick="showPage('admission')">Admission</button>
+        <button onclick="showPage('events')">Events</button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <span id="greeting" style="margin-left: 20px; color: #8b1e3f;"></span>
+    </div>
+
+    <div class="container">
+        <div id="content"></div>
+    </div>
+
+    <footer>
+        <p>© 2026 Our Lady of the Sacred Heart College of Guimba | All Rights Reserved</p>
+        <p>📞 (044) 958 1234 | ✉️ admissions@olshcog.edu.ph | 📍 Afan Salvador St., Guimba, Nueva Ecija</p>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        let currentUser = JSON.parse(localStorage.getItem('olshcog_current_user'));
+        if (!currentUser) {
+            window.location.href = 'index.html';
+        }
+        document.getElementById('greeting').innerHTML = `Welcome, ${currentUser.fullname.split(' ')[0]}!`;
+
+        function logout() {
+            localStorage.removeItem('olshcog_current_user');
+            window.location.href = 'index.html';
+        }
+
+        const pages = {
+            home: {
+                title: "🙏 Welcoming School Year 2026-2027",
+                desc: "Our Lady of the Sacred Heart College of Guimba (OLSHCOG) is a Catholic institution dedicated to forming students with competence, conscience, and compassionate service to the community.",
+                badge: "📍 Enrollment ongoing until June 15, 2026",
+                section: "Why Choose OLSHCOG?",
+                cards: [
+                    { title: "🏆 Academic Excellence", desc: "Consistently producing topnotchers in licensure exams.", tag: "Quality Education" },
+                    { title: "⛪ Marian Formation", desc: "Rooted in the devotion to Our Lady of the Sacred Heart.", tag: "Spiritual Growth" },
+                    { title: "💻 Modern Facilities", desc: "Computer labs, library, science laboratories.", tag: "21st Century Ready" }
+                ],
+                about: "Founded in 1947 by the Diocese of San Jose, Our Lady of the Sacred Heart College of Guimba has been a beacon of Catholic education in Nueva Ecija for over 78 years.",
+                contact: ["Afan Salvador St., Guimba, Nueva Ecija", "(044) 958 1234", "info@olshcog.edu.ph"]
+            },
+            programs: {
+                title: "🎓 Academic Programs SY 2026-2027",
+                desc: "OLSHCOG offers complete basic education and tertiary programs designed for global competitiveness.",
+                badge: "🏅 CHED Government Recognized",
+                section: "Our Program Offerings",
+                cards: [
+                    { title: "📖 Basic Education (K-10)", desc: "Kindergarten, Elementary, and Junior High School.", tag: "Preschool to Grade 10" },
+                    { title: "🎯 Senior High School", desc: "STEM, ABM, HUMSS, GAS, and TVL tracks.", tag: "Grades 11-12" },
+                    { title: "🏛️ College Department", desc: "Education, Criminology, Business Admin, IT, Hospitality Management.", tag: "Tertiary" }
+                ],
+                about: "Early Registration: March 1 - April 30, 2026\nRegular Enrollment: May 2 - June 15, 2026\nClasses Start: August 3, 2026",
+                contact: ["Academic Scholarship: Full tuition", "Financial Aid: Based on household income"]
+            },
+            admission: {
+                title: "📝 Admission Requirements",
+                desc: "Join the OLSHCOG family! Below are the steps and requirements.",
+                badge: "✅ No entrance exam for Kinder & Grade 1",
+                section: "Admission Process",
+                cards: [
+                    { title: "📋 Step 1: Application", desc: "Fill out the application form.", tag: "Get Form" },
+                    { title: "📂 Step 2: Requirements", desc: "PSA Birth Certificate, Report Card, Good Moral.", tag: "Checklist" },
+                    { title: "💵 Step 3: Assessment", desc: "Pay the admission fee.", tag: "Payment" },
+                    { title: "📌 Step 4: Confirmation", desc: "Receive enrollment confirmation.", tag: "Enrolled" }
+                ],
+                about: "Open Monday-Friday, 8:00 AM - 5:00 PM\nContact: registrar@olshcog.edu.ph",
+                contact: ["Mobile: 0917 555 7890", "Landline: (044) 958 1236"]
+            },
+            events: {
+                title: "🗓️ School Events & Calendar",
+                desc: "Stay updated with OLSHCOG's upcoming activities and important academic deadlines.",
+                badge: "📢 Next Event: Feast of Our Lady - July 2026",
+                section: "Upcoming Activities",
+                cards: [
+                    { title: "🙏 Feast of Our Lady", desc: "July 1-5, 2026. Novena and Procession.", tag: "July 2026" },
+                    { title: "🏅 Intramurals 2026", desc: "August 17-21, 2026. Sportsfest for all levels.", tag: "Sports" },
+                    { title: "📖 Parent-Teacher Conference", desc: "September 5, 2026. Report card distribution.", tag: "Meeting" },
+                    { title: "🎓 Foundation Week", desc: "October 19-24, 2026. 79th founding anniversary.", tag: "October 2026" }
+                ],
+                about: "First Day: August 3, 2026\nChristmas Break: Dec 21 - Jan 3\nGraduation: March 27, 2027",
+                contact: ["Student Affairs: osa@olshcog.edu.ph", "Guidance Office: guidance@olshcog.edu.ph"]
+            }
+        };
+
+        function showPage(pageName) {
+            let p = pages[pageName];
+            let html = `
+                <div class="announcement" onclick="alert('📣 For inquiries, contact Admissions at (044) 958 1234')">
+                    🎓 ANNOUNCEMENT: Scholarship applications for SY 2026-2027 now open!
+                </div>
+                <div class="hero">
+                    <h2>${p.title}</h2>
+                    <p>${p.desc}</p>
+                    <div class="badge" style="background:#8b1e3f; color:white; margin-top:15px">${p.badge}</div>
+                </div>
+                <h2 style="color:#8b1e3f; margin-bottom:20px; border-left:4px solid #8b1e3f; padding-left:15px">${p.section}</h2>
+                <div class="cards">
+                    ${p.cards.map(card => `
+                        <div class="card">
+                            <h3>${card.title}</h3>
+                            <p>${card.desc}</p>
+                            <span class="badge">${card.tag}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="info-row">
+                    <div class="info-block">
+                        <h3>📋 Additional Info</h3>
+                        <p style="white-space:pre-line">${p.about}</p>
+                    </div>
+                    <div class="info-block">
+                        <h3>📞 Contact Details</h3>
+                        <ul style="list-style:none">
+                            ${p.contact.map(c => `<li style="margin-bottom:10px">✓ ${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            document.getElementById('content').innerHTML = html;
+        }
+
+        showPage('home');
+    </script>
+</body>
+</html>

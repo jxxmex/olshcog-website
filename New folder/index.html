@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OLSHCOG - Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 400px;
+        }
+        h1 { color: #8b1e3f; text-align: center; }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #8b1e3f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .error { color: red; font-size: 12px; }
+        .success { color: green; font-size: 12px; }
+        a { color: #8b1e3f; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🙏 Register</h1>
+        <p style="text-align:center">Our Lady of the Sacred Heart College of Guimba</p>
+        
+        <input type="text" id="fullname" placeholder="Full Name">
+        <input type="text" id="username" placeholder="Username">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <input type="password" id="confirm" placeholder="Confirm Password">
+        <div id="message"></div>
+        <button onclick="register()">Register</button>
+        <p style="text-align:center; margin-top:20px">Already have an account? <a href="login.html">Login</a></p>
+    </div>
+
+    <script>
+        function register() {
+            let fullname = document.getElementById('fullname').value;
+            let username = document.getElementById('username').value;
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let confirm = document.getElementById('confirm').value;
+            let msg = document.getElementById('message');
+            
+            if (!fullname || !username || !email || !password) {
+                msg.innerHTML = '<span class="error">All fields required!</span>';
+                return;
+            }
+            if (password !== confirm) {
+                msg.innerHTML = '<span class="error">Passwords do not match!</span>';
+                return;
+            }
+            
+            let users = JSON.parse(localStorage.getItem('olshcog_users') || '[]');
+            if (users.find(u => u.username === username)) {
+                msg.innerHTML = '<span class="error">Username already exists!</span>';
+                return;
+            }
+            
+            users.push({ fullname, username, email, password });
+            localStorage.setItem('olshcog_users', JSON.stringify(users));
+            msg.innerHTML = '<span class="success">Registration successful! Redirecting...</span>';
+            setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+        }
+    </script>
+</body>
+</html>
